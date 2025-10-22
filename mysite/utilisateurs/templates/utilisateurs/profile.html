@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profil</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        .container {
+            width: 80%;
+            margin: 20px auto;
+            background: #fff;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        .profile-info {
+            display: flex;
+            justify-content: space-between;
+        }
+        .profile-info div {
+            width: 48%;
+        }
+        .profile-photo img {
+            width: 100%;
+            height: auto;
+        }
+        .profile-details {
+            padding: 10px;
+        }
+        .profile-details p {
+            font-size: 18px;
+            margin: 10px 0;
+        }
+        .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            margin: 10px 0;
+            background: #007BFF;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+        .btn:hover {
+            background: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Profil de {{ user.username }}</h1>
+        <div class="profile-info">
+            <div class="profile-photo">
+                {% if user.profile.photo_profile %}
+                    <img src="{{ user.profile.photo_profile.url }}" alt="Photo de profil">
+                {% else %}
+                    <p>Aucune photo de profil</p>
+                {% endif %}
+            </div>
+            <div class="profile-details">
+                <p><strong>Nom d'utilisateur :</strong> {{ user.username }}</p>
+                <p><strong>Prénom :</strong> {{ user.first_name }}</p>
+                <p><strong>Nom de famille :</strong> {{ user.last_name }}</p>
+                <p><strong>Email :</strong> {{ user.email }}</p>
+                <p><strong>Bio :</strong> {{ user.profile.bio }}</p>
+                <p><strong>Type de profil :</strong> {{ user.profile.get_type_profil_display }}</p>
+            </div>
+        </div>
+        <a href="{% url 'edit_profile' %}" class="btn">Modifier le profil</a>
+        <a href="{% url 'change_password' %}" class="btn">Changer le mot de passe</a>
+        <a href="{% url 'user_logout' %}" class="btn">Se déconnecter</a>
+    </div>
+</body>
+</html>

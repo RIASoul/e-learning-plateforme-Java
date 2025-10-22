@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<style>
+    body {
+        font-family: 'Roboto', sans-serif;
+        background: linear-gradient(135deg, #a8c0ff 0%, #f0f2f0 100%);
+        margin: 0;
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        min-height: 100vh;
+        color: #333;
+    }
+
+    form {
+        background: #fff;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        margin: 20px;
+        padding: 20px;
+        width: 80%;
+        max-width: 500px;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    form input[type="submit"] {
+        background-color: #4caf50; /* couleur du bouton */
+        color: white; /* couleur du texte */
+        border: none;
+        border-radius: 8px;
+        padding: 10px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+    }
+
+    form input[type="submit"]:hover {
+        background-color: #45a049; /* couleur du bouton au survol */
+    }
+
+    form a {
+        text-decoration: none;
+        color: #f44336; /* couleur du lien */
+        font-size: 16px;
+        text-align: center;
+        margin-top: 10px;
+        display: block;
+        transition: color 0.3s;
+    }
+
+    form a:hover {
+        color: #c62828; /* couleur du lien au survol */
+    }
+</style>
+
+<form method="POST">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" value="Confirmer la modification">
+    <a href="{% url 'programmes:lessonlistdetail' slug=lesson.slug %}">Annuler la modification</a>
+</form>
+{% endblock %}

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Résultat du Quiz</title>
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background: linear-gradient(to right, #ffecd2 0%, #fcb69f 100%);
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.8);
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+            font-size: 2.5em;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .message {
+            margin-top: 30px;
+            padding: 20px;
+            background-color: #ffd966;
+            border-radius: 8px;
+            border: 1px solid #e6b800;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Votre score: {{ score }}</h1>
+        <a href="{% url 'acceuil' %}">Retour à l'accueil</a>
+        <div class="message">
+            <p style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: #333;">
+                Si votre score est inférieur à 5, nous vous recommandons de revoir votre cours et refaire le quiz ultérieurement.
+            </p>
+        </div>
+    </div>
+</body>
+</html>

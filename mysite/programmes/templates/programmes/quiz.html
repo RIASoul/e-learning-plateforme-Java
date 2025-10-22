@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{{ quiz.name }} | Quiz</title>
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background: linear-gradient(to right, #ffecd2 0%, #fcb69f 100%);
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.8);
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+            font-size: 2.5em;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        h2 {
+            color: #444;
+            font-size: 1.5em;
+        }
+
+        .question {
+            margin-bottom: 30px;
+            padding: 15px;
+            background: #fff;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .question h2 {
+            font-size: 1.2em;
+            margin-bottom: 15px;
+            color: #333;
+        }
+
+        .option {
+            margin: 10px 0;
+            padding: 10px;
+            background: #f9f9f9;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        .option:hover {
+            background-color: #f1f1f1;
+        }
+
+        label {
+            margin-left: 8px;
+            font-size: 16px;
+            color: #555;
+        }
+
+        .btn {
+            display: block;
+            width: 100%;
+            padding: 15px;
+            font-size: 18px;
+            font-weight: bold;
+            color: #fff;
+            background: linear-gradient(to right, #00c6ff, #0072ff);
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: background 0.3s ease;
+        }
+
+        .btn:hover {
+            background: linear-gradient(to right, #0072ff, #00c6ff);
+        }
+
+        .btn:focus {
+            outline: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>{{ quiz.name }}</h1>
+
+        <form method="post">
+            {% csrf_token %}
+            {% for question in questions %}
+                <div class="question">
+                    <h2>{{ question.text }}</h2>
+                    {% for option in question.option_set.all %}
+                        <div class="option">
+                            <input type="radio" id="option_{{ option.id }}" name="question_{{ question.id }}" value="{{ option.id }}">
+                            <label for="option_{{ option.id }}">{{ option.text }}</label>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endfor %}
+            <input type="submit" value="Submit Quiz" class="btn">
+        </form>
+    </div>
+</body>
+</html>

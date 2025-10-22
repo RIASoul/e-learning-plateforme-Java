@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1> Etes vous sure de vouloir supprimer ? </h1>
+<form method="POST">
+{% csrf_token %}
+<input type="submit" value="Supprimer definitivement " >
+<a href="{% url 'programmes:lessonlistdetail' slug=lesson.slug %}">annuler la suppression </a></form>
+
+{% endblock %}

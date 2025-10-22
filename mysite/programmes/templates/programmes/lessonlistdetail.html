@@ -1,0 +1,239 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<style>
+    body {
+        font-family: 'Roboto', sans-serif;
+        line-height: 1.6;
+        margin: 0;
+        padding: 0;
+        background: radial-gradient(circle, rgba(144,238,144,1) 0%, rgba(34,139,34,1) 100%);
+        color: #333;
+        transition: background-color 0.5s ease;
+    }
+
+    .container {
+        padding: 20px;
+        background: rgba(255, 255, 255, 0.9);
+        border-radius: 15px;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+        backdrop-filter: blur(10px);
+        max-width: 1200px;
+        margin: 20px auto;
+        animation: fadeIn 1s ease-in-out;
+    }
+
+    @keyframes fadeIn {
+        from { opacity: 0; }
+        to { opacity: 1; }
+    }
+
+    .lesson-details {
+        background-color: rgba(255, 255, 255, 0.8);
+        border: 1px solid #ddd;
+        padding: 20px;
+        border-radius: 10px;
+        margin-bottom: 20px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .lesson-details:hover {
+        transform: scale(1.02);
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    }
+
+    .lesson-details p {
+        margin: 10px 0;
+        color: #333;
+    }
+
+    a {
+        color: #1e90ff;
+        text-decoration: none;
+        font-weight: bold;
+    }
+
+    a:hover {
+        text-decoration: underline;
+    }
+
+    .btn {
+        display: inline-block;
+        padding: 12px 25px;
+        font-size: 14px;
+        font-weight: bold;
+        border-radius: 30px;
+        text-align: center;
+        cursor: pointer;
+        margin-top: 10px;
+        transition: background-color 0.3s ease, transform 0.2s ease;
+        text-transform: uppercase;
+    }
+
+    .btn-primary {
+        background-color: #1e90ff;
+        color: white;
+        border: none;
+    }
+
+    .btn-primary:hover {
+        background-color: #1c86ee;
+        transform: scale(1.05);
+    }
+
+    .btn-warning {
+        background-color: #ff8c00;
+        color: white;
+        border: none;
+    }
+
+    .btn-warning:hover {
+        background-color: #ee7600;
+        transform: scale(1.05);
+    }
+
+    .btn-success {
+        background-color: #32cd32;
+        color: white;
+        border: none;
+    }
+
+    .btn-success:hover {
+        background-color: #2eb82e;
+        transform: scale(1.05);
+    }
+
+    .comment-section {
+        margin-top: 40px;
+    }
+
+    .comment-section h4 {
+        margin-bottom: 20px;
+        color: #333;
+        font-weight: bold;
+    }
+
+    .comment-form,
+    .reply-form {
+        margin-bottom: 20px;
+        background-color: rgba(255, 255, 255, 0.8);
+        padding: 20px;
+        border-radius: 10px;
+        border: 1px solid #ddd;
+        box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .form-group {
+        margin-bottom: 20px;
+    }
+
+    .comment {
+        background-color: rgba(255, 255, 255, 0.9);
+        padding: 15px;
+        border-radius: 10px;
+        margin-bottom: 20px;
+        border: 1px solid #ddd;
+        box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .comment:hover {
+        transform: scale(1.02);
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    }
+
+    .comment h4 {
+        margin-top: 0;
+        color: #333;
+    }
+
+    .comment small {
+        color: #555;
+    }
+
+    .reply {
+        background-color: rgba(240, 255, 240, 0.9);
+        padding: 10px;
+        border-radius: 10px;
+        margin-left: 20px;
+        margin-bottom: 10px;
+        border: 1px solid #ccc;
+        box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .reply:hover {
+        transform: scale(1.02);
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    }
+</style>
+
+<div class="container">
+
+    <div class="lesson-details">
+        <p>La leçon intitulée {{ lesson.nom }} a été créée par {{ lesson.creer_par }}</p><br>
+        <p>{{ lesson.description }}</p><br>
+
+        {% if lesson.video %}
+            <a href="{{ lesson.video.url }}" target="_blank" class="btn btn-primary">Ouvrir la vidéo</a>
+        {% else %}
+            <p>Aucune vidéo n'a été téléchargée pour cette leçon.</p>
+        {% endif %}
+
+        {% if lesson.fpe %}
+            <a href="{{ lesson.fpe.url }}" target="_blank" class="btn btn-primary">Ouvrir le fichier de présentation</a><br>
+        {% else %}
+            <p>Aucun fichier de présentation n'a été téléchargé pour cette leçon.</p>
+        {% endif %}
+
+        {% if lesson.pdf %}
+            <a href="{{ lesson.pdf.url }}" target="_blank" class="btn btn-primary">Ouvrir le cours en PDF</a><br>
+        {% else %}
+            <p>Aucun cours en PDF n'a été téléchargé pour cette leçon.</p>
+        {% endif %}
+
+        {% if user.is_superuser or user.profile.type_profil == 'enseignant' %}
+            <a href="{% url 'programmes:lessonupdate' slug=lesson.slug %}" class="btn btn-warning">Modifier la leçon</a><br>
+            <a href="{% url 'programmes:lessondelete' slug=lesson.slug %}" class="btn btn-warning">Supprimer la leçon</a><br>
+        {% endif %}
+        
+    </div>
+
+    <div class="comment-section">
+        <h4>Postez votre commentaire ici bas.</h4>
+
+        <form method="post" class="comment-form">
+            {% csrf_token %}
+            <div class="form-group">
+                {{ form.as_p }}
+                <input type="submit" name="form" value="Ajouter un commentaire" class="btn btn-success btn-sm">
+            </div>
+        </form>
+
+        {% for comment in lesson.comment.all %}
+            <div class="comment">
+                <h4>{{ comment.auteur }} <small><i>poste le {{ comment.date_added }}</i></small></h4>
+                <p>{{ comment.corps }}</p>
+
+                {% for reponse in comment.reponses.all %}
+                    <div class="reply">
+                        <h5>{{ reponse.auteur }} <small><i>poste le {{ reponse.date_added }}</i></small></h5>
+                        <p>{{ reponse.corps }}</p>
+                    </div>
+                {% endfor %}
+
+                <form method="POST" class="reply-form">
+                    {% csrf_token %}
+                    <input type="hidden" name="comment_id" value="{{ comment.id }}">
+                    {{ form2.as_p }}
+                    <input type="submit" name="form2" value="Répondez" class="btn btn-primary btn-sm">
+                </form>
+            </div>
+        {% endfor %}
+    </div>
+
+    <a href="{% url 'programmes:quiz_list' slug=lesson.slug %}" class="btn btn-primary">Allez au quiz</a>
+</div>
+{% endblock %}

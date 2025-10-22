@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Modifier le profil</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+    <style>
+        body {
+            background: linear-gradient(to right, #00b09b, #96c93d); /* Changement de couleur de fond */
+            color: #ffffff;
+            font-family: 'Arial', sans-serif;
+        }
+        .container {
+            margin-top: 50px;
+            padding: 30px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        h1 {
+            font-size: 2.5em;
+            margin-bottom: 20px;
+            text-align: center;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4);
+        }
+        form {
+            max-width: 500px;
+            margin: 0 auto;
+        }
+        .btn-primary {
+            background: #28a745;
+            background: linear-gradient(to right, #28a745, #218838); /* Changement de couleur du bouton */
+            border: none;
+            transition: background 0.3s ease;
+        }
+        .btn-primary:hover {
+            background: #218838;
+            background: linear-gradient(to right, #218838, #28a745);
+        }
+        label {
+            color: #ffffff;
+        }
+        .form-control {
+            background: rgba(255, 255, 255, 0.1);
+            border: none;
+            border-bottom: 2px solid #ffffff;
+            color: #ffffff;
+            transition: border-color 0.3s ease;
+        }
+        .form-control:focus {
+            border-color: #28a745;
+            background: rgba(255, 255, 255, 0.2);
+            box-shadow: none;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>Modifier le profil</h1>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-primary">Enregistrer les modifications</button>
+    </form>
+</div>
+</body>
+</html>
